@@ -1,0 +1,4 @@
+supergraph:
+  listen: 127.0.0.1:5000
+include_subgraph_errors:
+  all: true
