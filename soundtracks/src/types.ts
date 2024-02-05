@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { PlaylistModel, TrackModel, AddItemsToPlaylistPayloadModel } from './models';
+import { PlaylistModel, TrackModel, AddItemsToPlaylistPayloadModel, RecipeModel } from './models';
 import { DataSourceContext } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -16,6 +16,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  _FieldSet: { input: any; output: any; }
 };
 
 export type AddItemsToPlaylistInput = {
@@ -74,6 +75,15 @@ export type QueryPlaylistArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type Recipe = {
+  __typename?: 'Recipe';
+  id: Scalars['ID']['output'];
+  /** The name of the recipe */
+  name: Scalars['String']['output'];
+  /** A list of recommended playlists to accompany the recipe */
+  recommendedPlaylists: Array<Playlist>;
+};
+
 /** A single audio file, usually a song. */
 export type Track = {
   __typename?: 'Track';
@@ -93,6 +103,17 @@ export type Track = {
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
+export type ReferenceResolver<TResult, TReference, TContext> = (
+      reference: TReference,
+      context: TContext,
+      info: GraphQLResolveInfo
+    ) => Promise<TResult> | TResult;
+
+      type ScalarCheck<T, S> = S extends true ? T : NullableCheck<T, S>;
+      type NullableCheck<T, S> = Maybe<T> extends T ? Maybe<ListCheck<NonNullable<T>, S>> : ListCheck<T, S>;
+      type ListCheck<T, S> = T extends (infer U)[] ? NullableCheck<U, S>[] : GraphQLRecursivePick<T, S>;
+      export type GraphQLRecursivePick<T, S> = { [K in keyof T & keyof S]: ScalarCheck<T[K], S[K]> };
+    
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
@@ -161,28 +182,30 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   AddItemsToPlaylistInput: AddItemsToPlaylistInput;
-  AddItemsToPlaylistPayload: ResolverTypeWrapper<AddItemsToPlaylistPayloadModel>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  AddItemsToPlaylistPayload: ResolverTypeWrapper<AddItemsToPlaylistPayloadModel>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Playlist: ResolverTypeWrapper<PlaylistModel>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Recipe: ResolverTypeWrapper<RecipeModel>;
   Track: ResolverTypeWrapper<TrackModel>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AddItemsToPlaylistInput: AddItemsToPlaylistInput;
-  AddItemsToPlaylistPayload: AddItemsToPlaylistPayloadModel;
-  Boolean: Scalars['Boolean']['output'];
   ID: Scalars['ID']['output'];
+  String: Scalars['String']['output'];
+  AddItemsToPlaylistPayload: AddItemsToPlaylistPayloadModel;
   Int: Scalars['Int']['output'];
+  Boolean: Scalars['Boolean']['output'];
   Mutation: {};
   Playlist: PlaylistModel;
   Query: {};
-  String: Scalars['String']['output'];
+  Recipe: RecipeModel;
   Track: TrackModel;
 };
 
@@ -211,6 +234,14 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   playlist?: Resolver<Maybe<ResolversTypes['Playlist']>, ParentType, ContextType, RequireFields<QueryPlaylistArgs, 'id'>>;
 };
 
+export type RecipeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Recipe'] = ResolversParentTypes['Recipe']> = {
+  __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['Recipe']>, { __typename: 'Recipe' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], { __typename: 'Recipe' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
+
+  recommendedPlaylists?: Resolver<Array<ResolversTypes['Playlist']>, { __typename: 'Recipe' } & GraphQLRecursivePick<ParentType, {"id":true}> & GraphQLRecursivePick<ParentType, {"name":true}>, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type TrackResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Track'] = ResolversParentTypes['Track']> = {
   durationMs?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   explicit?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -225,6 +256,7 @@ export type Resolvers<ContextType = DataSourceContext> = {
   Mutation?: MutationResolvers<ContextType>;
   Playlist?: PlaylistResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Recipe?: RecipeResolvers<ContextType>;
   Track?: TrackResolvers<ContextType>;
 };
 

@@ -52,4 +52,20 @@ export const resolvers: Resolvers = {
       return durationMs;
     },
   },
+  Recipe: {
+    __resolveReference: ({ id, name }) => {
+      return {
+         id,
+         name
+      };
+    },
+    recommendedPlaylists: (parent, args, contextValue, info) => {
+      console.log({parent})
+      const playlists = [
+        { id: "1", name: "Rock n' Roll", description: "A rock n' roll playlist", tracks: { items: [] } = { items: []} },
+        { id: "2", name: "Pop", description: "A pop playlist", tracks: { items: [] } = { items: [] } },
+      ];
+      return playlists;
+    }
+  }
 };

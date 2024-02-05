@@ -7,10 +7,12 @@ const config: CodegenConfig = {
       plugins: ["typescript", "typescript-resolvers"],
       config: {
         contextType: "./context#DataSourceContext",
+        federation: true,
         mappers: {
           Playlist: "./models#PlaylistModel",
           Track: "./models#TrackModel",
           AddItemsToPlaylistPayload: "./models#AddItemsToPlaylistPayloadModel",
+          Recipe: "./models#RecipeModel"
         },
       },
     },

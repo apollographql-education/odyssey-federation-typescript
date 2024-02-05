@@ -8,6 +8,13 @@ extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@
     "Retrieves a specific playlist."
     playlist(id: ID!): Playlist
   }
+  type Recipe @key(fields: "id") {
+    id: ID!
+    "The name of the recipe"
+    name: String! @external
+    "A list of recommended playlists to accompany the recipe"
+    recommendedPlaylists: [Playlist!]! @requires(fields: "name")
+  }
   type Mutation {
     "Add one or more items to a user's playlist."
     addItemsToPlaylist(
