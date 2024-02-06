@@ -18,6 +18,19 @@ export class SpotifyAPI extends RESTDataSource {
     });
   }
 
+  async search(term: string) {
+    const { playlists: { items } } : { playlists: { items: [] }} = await this.get(`search`, {
+      params: {
+        q: term,
+        type: "playlist"
+      }
+    })
+    
+    return items;
+  }
+
+  
+
   getPlaylist(playlistId: string) {
     return this.get(`playlists/${playlistId}`);
   }

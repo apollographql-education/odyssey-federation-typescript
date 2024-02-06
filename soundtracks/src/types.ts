@@ -79,7 +79,7 @@ export type Recipe = {
   __typename?: 'Recipe';
   id: Scalars['ID']['output'];
   /** The name of the recipe */
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   /** A list of recommended playlists to accompany the recipe */
   recommendedPlaylists: Array<Playlist>;
 };
@@ -181,12 +181,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  AddItemsToPlaylistInput: AddItemsToPlaylistInput;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  AddItemsToPlaylistInput: ResolverTypeWrapper<Partial<AddItemsToPlaylistInput>>;
+  ID: ResolverTypeWrapper<Partial<Scalars['ID']['output']>>;
+  String: ResolverTypeWrapper<Partial<Scalars['String']['output']>>;
   AddItemsToPlaylistPayload: ResolverTypeWrapper<AddItemsToPlaylistPayloadModel>;
-  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Int: ResolverTypeWrapper<Partial<Scalars['Int']['output']>>;
+  Boolean: ResolverTypeWrapper<Partial<Scalars['Boolean']['output']>>;
   Mutation: ResolverTypeWrapper<{}>;
   Playlist: ResolverTypeWrapper<PlaylistModel>;
   Query: ResolverTypeWrapper<{}>;
@@ -196,12 +196,12 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  AddItemsToPlaylistInput: AddItemsToPlaylistInput;
-  ID: Scalars['ID']['output'];
-  String: Scalars['String']['output'];
+  AddItemsToPlaylistInput: Partial<AddItemsToPlaylistInput>;
+  ID: Partial<Scalars['ID']['output']>;
+  String: Partial<Scalars['String']['output']>;
   AddItemsToPlaylistPayload: AddItemsToPlaylistPayloadModel;
-  Int: Scalars['Int']['output'];
-  Boolean: Scalars['Boolean']['output'];
+  Int: Partial<Scalars['Int']['output']>;
+  Boolean: Partial<Scalars['Boolean']['output']>;
   Mutation: {};
   Playlist: PlaylistModel;
   Query: {};

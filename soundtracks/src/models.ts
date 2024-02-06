@@ -32,5 +32,5 @@ export type AddItemsToPlaylistPayloadModel = {
 
 export type RecipeModel = {
   id: string;
-  name: string;
+  name?: string;
 }
