@@ -29,4 +29,4 @@ node_modules/
 .idea/
 
 # Always regenerate new types before running project
-src/types.ts
+soundtracks/src/types.ts
