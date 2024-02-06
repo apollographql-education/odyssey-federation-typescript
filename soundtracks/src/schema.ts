@@ -1,31 +1,17 @@
 import { gql } from "graphql-tag";
 
 export const typeDefs = gql`
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
   type Query {
     "Playlists hand-picked to be featured to all users."
     featuredPlaylists: [Playlist!]!
     "Retrieves a specific playlist."
     playlist(id: ID!): Playlist
   }
-  extend type Recipe @key(fields: "id") {
-    id: ID!
-    "The name of the recipe"
-    name: String @external
-    "A list of recommended playlists to accompany the recipe"
-    recommendedPlaylists: [Playlist!]! @requires(fields: "name")
-  }
   type Mutation {
     "Add one or more items to a user's playlist."
     addItemsToPlaylist(
       input: AddItemsToPlaylistInput!
     ): AddItemsToPlaylistPayload!
-  }
-  input AddItemsToPlaylistInput {
-    "The ID of the playlist."
-    playlistId: ID!
-    "A comma-separated list of Spotify URIs to add."
-    uris: [String!]!
   }
   type AddItemsToPlaylistPayload {
     "Similar to HTTP status code, represents the status of the mutation"
@@ -36,6 +22,12 @@ extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@
     message: String!
     "The playlist that contains the newly added items"
     playlist: Playlist
+  }
+    input AddItemsToPlaylistInput {
+    "The ID of the playlist."
+    playlistId: ID!
+    "A comma-separated list of Spotify URIs to add."
+    uris: [String!]!
   }
   "A curated collection of tracks designed for a specific activity or mood."
   type Playlist {
