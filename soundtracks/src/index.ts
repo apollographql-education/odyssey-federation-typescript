@@ -1,14 +1,18 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { typeDefs } from "./schema";
+import { gql } from 'graphql-tag'
+import { readFileSync } from 'fs'
+import path from "path"
 import { resolvers } from "./resolvers";
 import { SpotifyAPI } from "./datasources/spotify-api";
+import { buildSubgraphSchema } from "@apollo/subgraph";
+
+const typeDefs = gql(readFileSync(path.resolve(__dirname, './schema.graphql'), { encoding: 'utf-8' }));
 
 async function startApolloServer() {
   const server = new ApolloServer({
-    typeDefs,
-    resolvers
-  });
+    schema: buildSubgraphSchema([{typeDefs, resolvers}])
+  })
   const { url } = await startStandaloneServer(server, {
     context: async () => {
       const { cache } = server;

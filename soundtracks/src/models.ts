@@ -12,6 +12,11 @@ export type TrackModelFromPlaylist = {
   track: TrackModel;
 };
 
+export type RecipeModel = {
+  id: string;
+  name: string;
+}
+
 export type TrackModel = {
   id: string;
   name: string;

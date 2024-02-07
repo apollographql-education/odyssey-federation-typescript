@@ -1,6 +1,4 @@
-import { gql } from "graphql-tag";
-
-export const typeDefs = gql`
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
   type Query {
     "Playlists hand-picked to be featured to all users."
     featuredPlaylists: [Playlist!]!
@@ -12,6 +10,13 @@ export const typeDefs = gql`
     addItemsToPlaylist(
       input: AddItemsToPlaylistInput!
     ): AddItemsToPlaylistPayload!
+  }
+  type Recipe @key(fields: "id") {
+    id: ID!
+    "The name of the recipe"
+    name: String @external
+    "A list of recommended playlists for this particular recipe. Returns 1 to 3 playlists."
+    recommendedPlaylists: [Playlist!]! @requires(fields: "name")
   }
   type AddItemsToPlaylistPayload {
     "Similar to HTTP status code, represents the status of the mutation"
@@ -53,4 +58,3 @@ export const typeDefs = gql`
     "The URI for the track, usually a Spotify link."
     uri: String!
   }
-`;

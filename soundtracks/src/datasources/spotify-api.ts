@@ -12,6 +12,7 @@ export class SpotifyAPI extends RESTDataSource {
   getPlaylist(playlistId: string): Promise<PlaylistModel> {
     return this.get(`playlists/${playlistId}`);
   }
+  
 
   addItemsToPlaylist(input: { playlistId: string, uris: string[] }): Promise<SnapshotOrError> {
     const { playlistId, uris } = input;
@@ -20,6 +21,16 @@ export class SpotifyAPI extends RESTDataSource {
         uris: uris.join(',')
       }
     });
+  }
+
+  async search(term: string) {
+    const { playlists: { items } } : { playlists: { items: [] }} = await this.get('search', {
+      params: {
+        q: term,
+        type: "playlist"
+      }
+    })
+    return items;
   }
 
 }
