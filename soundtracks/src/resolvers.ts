@@ -45,16 +45,10 @@ export const resolvers: Resolvers = {
     }
   },
   Track: {
-    durationMs: (parent) => {
-      const { duration_ms: durationMs } = parent;
-      return durationMs;
-    }
+    durationMs: (parent) => parent.duration_ms
   },
   Recipe: {
-    __resolveReference: (reference) => {
-      console.log(reference)
-      return reference;
-    },
+    __resolveReference: (reference) => reference,
     recommendedPlaylists: ({ name }, _, { dataSources }) => {
       return dataSources.spotifyAPI.search(name);
     }

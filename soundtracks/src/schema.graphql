@@ -1,16 +1,18 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.6", import: ["@key", "@requires", "@external"])
   type Query {
     "Playlists hand-picked to be featured to all users."
     featuredPlaylists: [Playlist!]!
     "Retrieves a specific playlist."
     playlist(id: ID!): Playlist
   }
+
   type Mutation {
     "Add one or more items to a user's playlist."
     addItemsToPlaylist(
       input: AddItemsToPlaylistInput!
     ): AddItemsToPlaylistPayload!
   }
+
   type Recipe @key(fields: "id") {
     id: ID!
     "The name of the recipe"
@@ -18,6 +20,7 @@ extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@
     "A list of recommended playlists for this particular recipe. Returns 1 to 3 playlists."
     recommendedPlaylists: [Playlist!]! @requires(fields: "name")
   }
+
   type AddItemsToPlaylistPayload {
     "Similar to HTTP status code, represents the status of the mutation"
     code: Int!
@@ -28,12 +31,14 @@ extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@
     "The playlist that contains the newly added items"
     playlist: Playlist
   }
-    input AddItemsToPlaylistInput {
+
+  input AddItemsToPlaylistInput {
     "The ID of the playlist."
     playlistId: ID!
     "A comma-separated list of Spotify URIs to add."
     uris: [String!]!
   }
+
   "A curated collection of tracks designed for a specific activity or mood."
   type Playlist {
     "The ID for the playlist."
@@ -45,6 +50,7 @@ extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@
     "The tracks of the playlist."
     tracks: [Track!]!
   }
+
   "A single audio file, usually a song."
   type Track {
     "The ID for the track."
