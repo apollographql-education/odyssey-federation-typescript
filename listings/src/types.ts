@@ -1,5 +1,4 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { PlaylistModel, TrackModel, AddItemsToPlaylistPayloadModel } from './models';
 import { DataSourceContext } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -18,75 +17,81 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type AddItemsToPlaylistInput = {
-  /** The ID of the playlist. */
-  playlistId: Scalars['ID']['input'];
-  /** A comma-separated list of Spotify URIs to add. */
-  uris: Array<Scalars['String']['input']>;
+export type Amenity = {
+  __typename?: 'Amenity';
+  /** The amenity category the amenity belongs to */
+  category: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** The amenity's name */
+  name: Scalars['String']['output'];
 };
 
-export type AddItemsToPlaylistPayload = {
-  __typename?: 'AddItemsToPlaylistPayload';
+export type CreateListingInput = {
+  /** The Listing's amenities */
+  amenities: Array<Scalars['ID']['input']>;
+  /** Indicates whether listing is closed for bookings (on hiatus) */
+  closedForBookings?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The cost per night */
+  costPerNight: Scalars['Float']['input'];
+  /** The listing's description */
+  description: Scalars['String']['input'];
+  /** The number of beds available */
+  numOfBeds: Scalars['Int']['input'];
+  /** The listing's title */
+  title: Scalars['String']['input'];
+};
+
+export type CreateListingResponse = {
+  __typename?: 'CreateListingResponse';
   /** Similar to HTTP status code, represents the status of the mutation */
   code: Scalars['Int']['output'];
+  /** The newly created listing */
+  listing?: Maybe<Listing>;
   /** Human-readable message for the UI */
   message: Scalars['String']['output'];
-  /** The playlist that contains the newly added items */
-  playlist?: Maybe<Playlist>;
   /** Indicates whether the mutation was successful */
   success: Scalars['Boolean']['output'];
 };
 
+/** A particular intergalactic location available for booking */
+export type Listing = {
+  __typename?: 'Listing';
+  /** The amenities available for this listing */
+  amenities: Array<Amenity>;
+  /** Indicates whether listing is closed for bookings (on hiatus) */
+  closedForBookings?: Maybe<Scalars['Boolean']['output']>;
+  /** The cost per night */
+  costPerNight?: Maybe<Scalars['Float']['output']>;
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** The number of beds available */
+  numOfBeds?: Maybe<Scalars['Int']['output']>;
+  /** The listing's title */
+  title: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Add one or more items to a user's playlist. */
-  addItemsToPlaylist: AddItemsToPlaylistPayload;
+  /** Creates a new listing */
+  createListing: CreateListingResponse;
 };
 
 
-export type MutationAddItemsToPlaylistArgs = {
-  input: AddItemsToPlaylistInput;
-};
-
-/** A curated collection of tracks designed for a specific activity or mood. */
-export type Playlist = {
-  __typename?: 'Playlist';
-  /** Describes the playlist, what to expect and entices the user to listen. */
-  description?: Maybe<Scalars['String']['output']>;
-  /** The ID for the playlist. */
-  id: Scalars['ID']['output'];
-  /** The name of the playlist. */
-  name: Scalars['String']['output'];
-  /** The tracks of the playlist. */
-  tracks: Array<Track>;
+export type MutationCreateListingArgs = {
+  input: CreateListingInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  /** Playlists hand-picked to be featured to all users. */
-  featuredPlaylists: Array<Playlist>;
-  /** Retrieves a specific playlist. */
-  playlist?: Maybe<Playlist>;
+  /** A curated array of listings to feature on the homepage */
+  featuredListings: Array<Listing>;
+  /** Returns the details about this listing */
+  listing?: Maybe<Listing>;
 };
 
 
-export type QueryPlaylistArgs = {
+export type QueryListingArgs = {
   id: Scalars['ID']['input'];
-};
-
-/** A single audio file, usually a song. */
-export type Track = {
-  __typename?: 'Track';
-  /** The track length in milliseconds. */
-  durationMs: Scalars['Int']['output'];
-  /** Whether or not the track has explicit lyrics (true = yes it does; false = no it does not OR unknown) */
-  explicit: Scalars['Boolean']['output'];
-  /** The ID for the track. */
-  id: Scalars['ID']['output'];
-  /** The name of the track */
-  name: Scalars['String']['output'];
-  /** The URI for the track, usually a Spotify link. */
-  uri: Scalars['String']['output'];
 };
 
 
@@ -160,71 +165,74 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  AddItemsToPlaylistInput: AddItemsToPlaylistInput;
-  AddItemsToPlaylistPayload: ResolverTypeWrapper<AddItemsToPlaylistPayloadModel>;
+  Amenity: ResolverTypeWrapper<Amenity>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  CreateListingInput: CreateListingInput;
+  CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Listing: ResolverTypeWrapper<Listing>;
   Mutation: ResolverTypeWrapper<{}>;
-  Playlist: ResolverTypeWrapper<PlaylistModel>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  Track: ResolverTypeWrapper<TrackModel>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  AddItemsToPlaylistInput: AddItemsToPlaylistInput;
-  AddItemsToPlaylistPayload: AddItemsToPlaylistPayloadModel;
+  Amenity: Amenity;
   Boolean: Scalars['Boolean']['output'];
+  CreateListingInput: CreateListingInput;
+  CreateListingResponse: CreateListingResponse;
+  Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
+  Listing: Listing;
   Mutation: {};
-  Playlist: PlaylistModel;
   Query: {};
   String: Scalars['String']['output'];
-  Track: TrackModel;
 };
 
-export type AddItemsToPlaylistPayloadResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['AddItemsToPlaylistPayload'] = ResolversParentTypes['AddItemsToPlaylistPayload']> = {
+export type AmenityResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Amenity'] = ResolversParentTypes['Amenity']> = {
+  category?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CreateListingResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['CreateListingResponse'] = ResolversParentTypes['CreateListingResponse']> = {
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  playlist?: Resolver<Maybe<ResolversTypes['Playlist']>, ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addItemsToPlaylist?: Resolver<ResolversTypes['AddItemsToPlaylistPayload'], ParentType, ContextType, RequireFields<MutationAddItemsToPlaylistArgs, 'input'>>;
+export type ListingResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Listing'] = ResolversParentTypes['Listing']> = {
+  amenities?: Resolver<Array<ResolversTypes['Amenity']>, ParentType, ContextType>;
+  closedForBookings?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  costPerNight?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  numOfBeds?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PlaylistResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Playlist'] = ResolversParentTypes['Playlist']> = {
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  tracks?: Resolver<Array<ResolversTypes['Track']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+export type MutationResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createListing?: Resolver<ResolversTypes['CreateListingResponse'], ParentType, ContextType, RequireFields<MutationCreateListingArgs, 'input'>>;
 };
 
 export type QueryResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  featuredPlaylists?: Resolver<Array<ResolversTypes['Playlist']>, ParentType, ContextType>;
-  playlist?: Resolver<Maybe<ResolversTypes['Playlist']>, ParentType, ContextType, RequireFields<QueryPlaylistArgs, 'id'>>;
-};
-
-export type TrackResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Track'] = ResolversParentTypes['Track']> = {
-  durationMs?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  explicit?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  uri?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  featuredListings?: Resolver<Array<ResolversTypes['Listing']>, ParentType, ContextType>;
+  listing?: Resolver<Maybe<ResolversTypes['Listing']>, ParentType, ContextType, RequireFields<QueryListingArgs, 'id'>>;
 };
 
 export type Resolvers<ContextType = DataSourceContext> = {
-  AddItemsToPlaylistPayload?: AddItemsToPlaylistPayloadResolvers<ContextType>;
+  Amenity?: AmenityResolvers<ContextType>;
+  CreateListingResponse?: CreateListingResponseResolvers<ContextType>;
+  Listing?: ListingResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-  Playlist?: PlaylistResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Track?: TrackResolvers<ContextType>;
 };
 
