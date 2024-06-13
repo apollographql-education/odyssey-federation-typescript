@@ -1,5 +1,3 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.7")
-
 "A particular intergalactic location available for booking"
 type Listing {
   id: ID!
