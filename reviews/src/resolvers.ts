@@ -19,4 +19,15 @@ export const resolvers: Resolvers = {
       }
     }
     },
+    Listing: {
+      __resolveReference: (representation) => {
+        return representation;
+      },
+      reviews: ({ id }, _, {dataSources}) => {
+        return dataSources.reviewsDb.getReviewsByListing(id);
+      },
+      overallRating: ({ id }, _, { dataSources }) => {
+        return dataSources.reviewsDb.getOverallRatingForListing(id);
+      }
+    }
 };
