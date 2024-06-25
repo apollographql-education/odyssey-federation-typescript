@@ -1,6 +1,12 @@
 # Ignore the compiled output.
 dist/
 
+# Ignore .env
+.env
+
+# Don't commit router binary
+router/router
+
 # TypeScript incremental compilation cache
 *.tsbuildinfo
 
@@ -26,4 +32,5 @@ node_modules/
 .idea/
 
 # Always regenerate new types before running project
-src/types.ts
+listings/src/types.ts
+reviews/src/types.ts
