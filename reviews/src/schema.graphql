@@ -1,0 +1,39 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.7", import: ["@key"])
+
+type Query {
+  "A list of all the reviews in the database"
+  allReviews: [Review!]!
+}
+
+type Mutation {
+  "Creates a new review in the database"
+  submitReview(listingId: ID!, review: ReviewInput!): SubmitReviewResponse!
+}
+
+input ReviewInput {
+  "Comment the author has written"
+  text: String!
+  "The numerical rating for the review target, on a scale of 1-5, with 5 being excellent."
+  rating: Float!
+}
+
+type SubmitReviewResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Newly created review"
+  review: Review
+}
+
+"A comment and a rating submitted by a guest about a particular listing"
+type Review {
+  id: ID!
+  "Comment the author has written"
+  text: String!
+  "The numerical rating for the review target, on a scale of 1-5, with 5 being excellent."
+  rating: Float!
+}
