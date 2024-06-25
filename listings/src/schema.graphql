@@ -2,7 +2,7 @@ extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.7", import: ["@key"])
 
 "A particular intergalactic location available for booking"
-type Listing {
+type Listing @key(fields: "id") {
   id: ID!
   "The listing's title"
   title: String!
