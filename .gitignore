@@ -15,9 +15,6 @@ yarn-error.log*
 coverage/
 __temp
 
-# JUnit Reports (used mainly in CircleCI)
-reports/
-junit.xml
 
 # Node modules
 node_modules/
@@ -29,4 +26,4 @@ node_modules/
 .idea/
 
 # Always regenerate new types before running project
-soundtracks/src/types.ts
+src/types.ts
