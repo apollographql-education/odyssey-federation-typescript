@@ -18,7 +18,7 @@ export class ListingAPI extends RESTDataSource {
   }
   createListing(listing: CreateListingInput): Promise<Listing> {
     return this.post("listings", {
-      body: { listing}
+      body: { listing }
     });
   }
 }
