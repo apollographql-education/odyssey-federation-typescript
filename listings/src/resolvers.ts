@@ -34,7 +34,7 @@ export const resolvers: Resolvers = {
       return {
         code: 500,
         success: false,
-        message: `Something went wrong: ${err}`,
+        message: `Something went wrong: ${err.extensions.response.body}`,
         listing: null,
       };
     }
