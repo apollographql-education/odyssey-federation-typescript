@@ -45,7 +45,7 @@ input CreateListingInput {
   costPerNight: Float!
   "Indicates whether listing is closed for bookings (on hiatus)"
   closedForBookings: Boolean
-  "The Listing's amenities"
+  "The listing's amenities"
   amenities: [ID!]!
 }
 
