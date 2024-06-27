@@ -3,7 +3,7 @@ type Listing {
   id: ID!
   "The listing's title"
   title: String!
-    "The listing's description"
+  "The listing's description"
   description: String!
   "The number of beds available"
   numOfBeds: Int
