@@ -6,27 +6,26 @@ Welcome to the starter code for **Federation with TypeScript**. You can find the
 
 The course will walk you step by step on what to do. This codebase is the starting point of your journey!
 
-In order to install and run the project locally, run:
+In order to install and run the project locally, navigate into the `listings` directory and run:
 
 ```shell
 npm install && npm run dev
 ```
 
-Right now, the project is a GraphQL server returning playlist and track data at `http://localhost:4000`. You can use visit `http://localhost:4000` directly, or use [Apollo Sandbox](https://studio.apollographql.com/sandbox?endpoint=http://localhost:5059/graphql) to connect to the endpoint and send queries.
+Right now, `listings` is a GraphQL server returning listing and amenity data at `http://localhost:4000`. You can visit `http://localhost:4000` directly, or use [Apollo Sandbox](https://studio.apollographql.com/sandbox?endpoint=http://localhost:5059/graphql) to connect to the endpoint and send queries.
 
 Try running this query:
 
 ```graphql
-query GetFeaturedPlaylists {
-  featuredPlaylists {
+query GetFeaturedListings {
+  featuredListings {
     id
-    name
+    title
     description
-    tracks {
+    amenities {
       id
       name
-      explicit
-      uri
+      category
     }
   }
 }
