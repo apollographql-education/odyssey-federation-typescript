@@ -12,7 +12,7 @@ In order to install and run the project locally, navigate into the `listings` di
 npm install && npm run dev
 ```
 
-Right now, `listings` is a GraphQL server returning listing and amenity data at `http://localhost:4000`. You can use visit `http://localhost:4000` directly, or use [Apollo Sandbox](https://studio.apollographql.com/sandbox?endpoint=http://localhost:5059/graphql) to connect to the endpoint and send queries.
+Right now, `listings` is a GraphQL server returning listing and amenity data at `http://localhost:4000`. You can visit `http://localhost:4000` directly, or use [Apollo Sandbox](https://studio.apollographql.com/sandbox?endpoint=http://localhost:5059/graphql) to connect to the endpoint and send queries.
 
 Try running this query:
 
